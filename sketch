@@ -1,0 +1,210 @@
+#include "SPI.h"
+#include "TFT_eSPI.h"
+#define TFT_GREY 0x7BEF
+TFT_eSPI tft = TFT_eSPI();
+
+const int ledPingreen = 0;
+const int ledPinred = 15;
+const int ledPinyellow = 17;
+int dutyCycle = 127;
+// setting PWM properties
+const int ledChannelgreen = 0;
+const int ledChannelred = 10;
+const int ledChannelyellow = 15;
+const int resolution = 8;
+
+void setup() {
+  tft.begin();        // inicializa pantalla
+  tft.setRotation(3);     // establece posicion horizontal con pines derecha
+  tft.fillScreen(TFT_BLACK);
+  // configure LED PWM functionalitites
+  //  ledcSetup(ledChannelgreen, freqgreen, resolution);
+  //  ledcSetup(ledChannelred, freqred, resolution);
+  // ledcSetup(ledChannelyellow, freqyellow, resolution);
+  pinMode(4, OUTPUT);
+  pinMode(16, OUTPUT);
+  pinMode(19, OUTPUT);
+ 
+    digitalWrite(4, HIGH);
+  digitalWrite(16, HIGH);
+  digitalWrite(19, HIGH);
+  ledcAttachPin(ledPingreen, ledChannelgreen);
+  ledcAttachPin(ledPinred, ledChannelred);
+  ledcAttachPin(ledPinyellow, ledChannelyellow);
+}
+void loop() {
+  int freqgreen = (2.6 * analogRead(36));
+  int freqred = (2.6 * analogRead(39));
+  int freqyellow = (2.6 * analogRead (34));
+  float rpmgreen = (freqgreen / 53.3);
+  float rpmred = (freqred / 53.3);
+  float rpmyellow = (freqyellow / 546.13);
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextColor(ILI9341_GREEN);  // color de texto en VERDE
+  tft.setTextSize(2);     // escala de texto en 2
+  tft.setCursor(75, 10);
+  tft.print("GREEN_MOTOR");
+  tft.setCursor(75, 50);
+  tft.print(rpmgreen);
+  tft.setCursor(175, 50);
+  tft.print("rpm");
+  tft.drawLine(0, 80, 320, 80, TFT_WHITE);
+  delay(100);
+
+  tft.setTextColor(ILI9341_RED);  // color de texto en ROJO
+  tft.setTextSize(2);     // escala de texto en 2
+  tft.setCursor(75, 85);
+  tft.print("RED_MOTOR");
+  tft.setCursor(75, 120);
+  tft.print(rpmred);
+  tft.setCursor(175, 120);
+  tft.print("rpm");
+  tft.drawLine(0, 150, 320, 150, TFT_WHITE);
+  delay(100);
+
+  tft.setTextColor(ILI9341_YELLOW);  // color de texto en amarillo
+  tft.setTextSize(2);     // escala de texto en 2
+  tft.setCursor(75, 155);
+  tft.print("YELLOW_MOTOR");
+  tft.setCursor(75, 185);
+  tft.print(rpmyellow);
+  tft.setCursor(175, 185);
+  tft.print("rpm");
+  delay(100);
+
+  if (freqgreen >= 10) {
+    digitalWrite(4, LOW);
+    ledcSetup(ledChannelgreen, freqgreen, resolution);
+    ledcWrite(ledChannelgreen, dutyCycle);
+    delay(100);
+  }
+  else {
+    digitalWrite(4, HIGH);
+  }
+
+  if (freqred >= 10) {
+    digitalWrite(16, LOW);
+    ledcSetup(ledChannelred, freqred, resolution);
+    ledcWrite(ledChannelred, dutyCycle);
+    delay(100);
+  }
+  else {
+    digitalWrite(16, HIGH);
+  }
+
+  if (freqyellow >= 546) {
+    digitalWrite#include "SPI.h"
+#include "TFT_eSPI.h"
+#define TFT_GREY 0x7BEF
+TFT_eSPI tft = TFT_eSPI();
+
+const int ledPingreen = 0;
+const int ledPinred = 15;
+const int ledPinyellow = 17;
+int dutyCycle = 127;
+// setting PWM properties
+const int ledChannelgreen = 0;
+const int ledChannelred = 10;
+const int ledChannelyellow = 15;
+const int resolution = 8;
+
+void setup() {
+  tft.begin();        // inicializa pantalla
+  tft.setRotation(3);     // establece posicion horizontal con pines derecha
+  tft.fillScreen(TFT_BLACK);
+  pinMode(4, OUTPUT);
+  pinMode(16, OUTPUT);
+  pinMode(19, OUTPUT);
+  digitalWrite(4, HIGH);
+  digitalWrite(16, HIGH);
+  digitalWrite(19, HIGH);
+  ledcAttachPin(ledPingreen, ledChannelgreen);
+  ledcAttachPin(ledPinred, ledChannelred);
+  ledcAttachPin(ledPinyellow, ledChannelyellow);
+}
+void loop() {
+  int freqgreen = (2.6 * analogRead(36));
+  int freqred = (2.6 * analogRead(39));
+  int freqyellow = (2.6 * analogRead (34));
+  float rpmgreen = (freqgreen / 53.3);
+  float rpmred = (freqred / 53.3);
+  float rpmyellow = (freqyellow / 546.13);
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextColor(ILI9341_GREEN);  // color de texto en VERDE
+  tft.setTextSize(2);     // escala de texto en 2
+  tft.setCursor(90, 10);
+  tft.print("GREEN_MOTOR");
+  tft.setCursor(10, 50);
+  tft.print(freqgreen);
+  tft.setCursor(90, 50);
+  tft.print("Hz");
+  tft.setCursor(165, 50);
+  tft.print(rpmgreen);
+  tft.setCursor(280, 50);
+  tft.print("rpm");
+  tft.drawLine(0, 80, 320, 80, TFT_WHITE);
+  tft.drawLine(159, 30, 159, 80, TFT_WHITE);
+  delay(10);
+
+  tft.setTextColor(ILI9341_RED);  // color de texto en ROJO
+  tft.setTextSize(2);     // escala de texto en 2
+  tft.setCursor(90, 85);
+  tft.print("RED_MOTOR");
+  tft.setCursor(10, 130);
+  tft.print(freqred);
+  tft.setCursor(90, 130);
+  tft.print("Hz");
+  tft.setCursor(165, 130);
+  tft.print(rpmred);
+  tft.setCursor(280, 130);
+  tft.print("rpm");
+  tft.drawLine(0, 150, 320, 150, TFT_WHITE);
+  tft.drawLine(159, 110, 159, 150, TFT_WHITE);
+  delay(20);
+
+  tft.setTextColor(ILI9341_YELLOW);  // color de texto en amarillo
+  tft.setTextSize(2);     // escala de texto en 2
+  tft.setCursor(90, 155);
+  tft.print("YELLOW_MOTOR");
+  tft.setCursor(10, 200);
+  tft.print(freqyellow);
+  tft.setCursor(90, 200);
+  tft.print("Hz");
+  tft.setCursor(165, 200);
+  tft.print(rpmyellow);
+  tft.setCursor(280, 200);
+  tft.print("rpm");
+  tft.drawLine(159, 180, 159, 235, TFT_WHITE);
+  delay(500);
+
+  if (freqgreen >= 10) {
+    digitalWrite(4, LOW);
+    ledcSetup(ledChannelgreen, freqgreen, resolution);
+    ledcWrite(ledChannelgreen, dutyCycle);
+    delay(100);
+  }
+  else {
+    digitalWrite(4, HIGH);
+  }
+
+  if (freqred >= 10) {
+    digitalWrite(16, LOW);
+    ledcSetup(ledChannelred, freqred, resolution);
+    ledcWrite(ledChannelred, dutyCycle);
+    delay(100);
+  }
+  else {
+    digitalWrite(16, HIGH);
+  }
+
+  if (freqyellow >= 300) {
+    digitalWrite(19, LOW);
+    ledcSetup(ledChannelyellow, freqyellow, resolution);
+    ledcWrite(ledChannelyellow, dutyCycle);
+    delay(100);
+  }
+  else {
+    digitalWrite(19, HIGH);
+  }
+
+ }
